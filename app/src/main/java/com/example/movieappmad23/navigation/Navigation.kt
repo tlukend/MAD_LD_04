@@ -20,6 +20,10 @@ fun Navigation() {
             FavoriteScreen(navController = navController)
         }
 
+        composable(Screen.AddMovieScreen.route) {
+            AddMovieScreen(navController = navController)
+        }
+
         // build a route like: root/detail-screen/id=34
         composable(
             Screen.DetailScreen.route,

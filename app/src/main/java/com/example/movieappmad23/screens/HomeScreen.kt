@@ -8,6 +8,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,6 +26,14 @@ fun HomeScreen(navController: NavController = rememberNavController()){
         HomeTopAppBar(
             title = "Home",
             menuContent = {
+                DropdownMenuItem(onClick = { navController.navigate(Screen.AddMovieScreen.route) }) {
+                    Row {
+                        Icon(imageVector = Icons.Default.Edit, contentDescription = "Add Movie", modifier = Modifier.padding(4.dp))
+                        Text(text = "Add Movie", modifier = Modifier
+                            .width(100.dp)
+                            .padding(4.dp))
+                    }
+                }
                 DropdownMenuItem(onClick = { navController.navigate(Screen.FavoriteScreen.route) }) {
                     Row {
                         Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorites", modifier = Modifier.padding(4.dp))
