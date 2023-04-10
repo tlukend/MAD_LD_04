@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -26,10 +27,12 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.example.movieappmad23.R
+import com.example.movieappmad23.ViewModels.MovieViewModel
 import com.example.movieappmad23.models.Movie
 import com.example.movieappmad23.models.getMovies
 import com.example.movieappmad23.ui.theme.Shapes
@@ -39,7 +42,9 @@ import com.example.movieappmad23.ui.theme.Shapes
 fun MovieRow(
     movie: Movie = getMovies()[0],
     modifier: Modifier = Modifier,
-    onItemClick: (String) -> Unit = {}
+    onItemClick: (String) -> Unit = {},
+    movieViewModel: MovieViewModel = viewModel(),
+    onFavoriteClick: (Movie) -> Unit = {}
 ) {
     Card(modifier = modifier
         .clickable {
@@ -57,7 +62,7 @@ fun MovieRow(
                 contentAlignment = Alignment.Center
             ) {
                 MovieImage(imageUrl = movie.images[0])
-                FavoriteIcon()
+                FavoriteIcon(movie, onFavoriteClick)
             }
 
             MovieDetails(modifier = Modifier.padding(12.dp), movie = movie)
@@ -83,16 +88,23 @@ fun MovieImage(imageUrl: String) {
 }
 
 @Composable
-fun FavoriteIcon() {
+fun FavoriteIcon(movie: Movie, onFavoriteClick: (Movie) -> Unit ) {
+    var favoriteIcon by remember { mutableStateOf(Icons.Default.FavoriteBorder) }
+    favoriteIcon = if (movie.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder
+
     Box(modifier = Modifier
         .fillMaxSize()
         .padding(10.dp),
         contentAlignment = Alignment.TopEnd
     ){
+
         Icon(
+            modifier = Modifier
+                .clickable{onFavoriteClick(movie)},
             tint = MaterialTheme.colors.secondary,
-            imageVector = Icons.Default.FavoriteBorder,
-            contentDescription = "Add to favorites")
+            imageVector = favoriteIcon,
+            contentDescription = "Add to favorites"
+        )
     }
 }
 
