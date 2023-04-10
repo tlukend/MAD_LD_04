@@ -46,6 +46,7 @@ fun MovieRow(
     movieViewModel: MovieViewModel = viewModel(),
     onFavoriteClick: (Movie) -> Unit = {}
 ) {
+
     Card(modifier = modifier
         .clickable {
             onItemClick(movie.id)
