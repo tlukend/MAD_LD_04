@@ -32,7 +32,6 @@ import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.example.movieappmad23.R
-import com.example.movieappmad23.ViewModels.MovieViewModel
 import com.example.movieappmad23.models.Movie
 import com.example.movieappmad23.models.getMovies
 import com.example.movieappmad23.ui.theme.Shapes
@@ -43,7 +42,6 @@ fun MovieRow(
     movie: Movie = getMovies()[0],
     modifier: Modifier = Modifier,
     onItemClick: (String) -> Unit = {},
-    movieViewModel: MovieViewModel = viewModel(),
     onFavoriteClick: (Movie) -> Unit = {}
 ) {
 
@@ -101,7 +99,8 @@ fun FavoriteIcon(movie: Movie, onFavoriteClick: (Movie) -> Unit ) {
 
         Icon(
             modifier = Modifier
-                .clickable{onFavoriteClick(movie)},
+                .clickable{onFavoriteClick(movie)
+                    favoriteIcon = if (movie.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder},
             tint = MaterialTheme.colors.secondary,
             imageVector = favoriteIcon,
             contentDescription = "Add to favorites"

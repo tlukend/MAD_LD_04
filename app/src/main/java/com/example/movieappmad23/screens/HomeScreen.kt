@@ -13,9 +13,10 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.movieappmad23.ViewModels.MovieViewModel
+import com.example.movieappmad23.ViewModels.MoviesViewModel
 import com.example.movieappmad23.models.Movie
 import com.example.movieappmad23.models.getMovies
 import com.example.movieappmad23.widgets.HomeTopAppBar
@@ -25,7 +26,7 @@ import com.example.movieappmad23.widgets.MovieRow
 @Composable
 fun HomeScreen(
     navController: NavController = rememberNavController(),
-    movieViewModel: MovieViewModel
+    moviesViewModel: MoviesViewModel
 ){
     Scaffold(topBar = {
         HomeTopAppBar(
@@ -50,7 +51,7 @@ fun HomeScreen(
             }
         )
     }) { padding ->
-        MainContent(modifier = Modifier.padding(padding), navController = navController, movieViewModel = movieViewModel)
+        MainContent(modifier = Modifier.padding(padding), navController = navController, moviesViewModel = moviesViewModel)
     }
 }
 
@@ -58,14 +59,14 @@ fun HomeScreen(
 fun MainContent(
     modifier: Modifier,
     navController: NavController,
-    movieViewModel: MovieViewModel
+    moviesViewModel: MoviesViewModel
 ) {
     val movies = getMovies()
     MovieList(
         modifier = modifier,
         navController = navController,
         movies = movies,
-        movieViewModel = movieViewModel
+        movieViewModel = moviesViewModel
     )
 }
 
@@ -74,14 +75,16 @@ fun MovieList(
     modifier: Modifier = Modifier,
     navController: NavController,
     movies: List<Movie> = getMovies(),
-    movieViewModel: MovieViewModel
+    movieViewModel: MoviesViewModel
 ) {
+    //val movieliststate by viewmodel.movieliststate.collectasstate()
+
     LazyColumn (
         modifier = modifier,
         contentPadding = PaddingValues(all = 12.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        items(movieViewModel.movies) { movie ->
+        items(movieViewModel.movieList) { movie ->
             MovieRow(
                 movie = movie,
                 onItemClick = { movieId ->

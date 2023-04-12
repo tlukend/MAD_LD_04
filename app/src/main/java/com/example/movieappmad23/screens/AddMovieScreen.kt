@@ -19,9 +19,15 @@ import com.example.movieappmad23.R
 import com.example.movieappmad23.models.Genre
 import com.example.movieappmad23.models.ListItemSelectable
 import com.example.movieappmad23.widgets.SimpleTopAppBar
+import com.example.movieappmad23.ViewModels.MoviesViewModel
+
+var errorMessage: String = "Your input is not valid, try again!"
 
 @Composable
-fun AddMovieScreen(navController: NavController){
+fun AddMovieScreen(
+    navController: NavController,
+    moviesViewModel: MoviesViewModel
+){
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -35,6 +41,9 @@ fun AddMovieScreen(navController: NavController){
         MainContent(Modifier.padding(padding))
     }
 }
+
+
+
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -101,6 +110,10 @@ fun MainContent(modifier: Modifier = Modifier) {
                 onValueChange = { title = it },
                 label = { Text(text = stringResource(R.string.enter_movie_title)) },
                 isError = false
+
+            )
+            Text(
+                text="Yoyoyo ${title} is wrong, bro ",
             )
 
             OutlinedTextField(
